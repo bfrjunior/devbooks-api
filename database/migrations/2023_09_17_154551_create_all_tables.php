@@ -16,7 +16,7 @@ class CreateAllTables extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('email', 100);
-            $table->string('passsword', 200);
+            $table->string('password', 200);
             $table->string('name', 100);
             $table->string('birthdate');
             $table->string('city', 100)->nullable();
