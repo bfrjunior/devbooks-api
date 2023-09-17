@@ -165,6 +165,10 @@ return [
         /*
          * Package Service Providers...
          */
+        Intervention\Image\ImageServiceProvider::class,
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+        'Image' => Intervention\Image\Facades\Image::class,
+
 
         /*
          * Application Service Providers...
