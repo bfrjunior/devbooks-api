@@ -117,4 +117,38 @@ class UserController extends Controller
 
         return $array;
     }
+
+    public function updateCover(Request $request)
+    {
+        $array = ['error' => ''];
+        $allowedTypes = ['image/png', 'image/jpeg', 'image/png'];
+
+        $image = $request->file('cover');
+        if ($image) {
+            if (in_array($image->getClientMimeType(), $allowedTypes)) {
+                $filename = md5(time()) . rand(0, 9999) . '.jpg';
+
+                $destPath = public_path('/media/covers/');
+
+                $img = Image::make($image->path())
+                    ->fit(850, 310)
+                    ->save($destPath . '/' . $filename);
+
+                $user = User::find($this->loggedUser['id']);
+                $user->cover = $filename;
+                $user->save();
+
+                $array['url'] = url('/media/covers/' . $filename);
+            } else {
+                $array['error'] = 'Arquivo não suportado.';
+                return $array;
+            }
+        } else {
+            $array['error'] = 'Arquivo não enviado.';
+            return $array;
+        }
+
+
+        return $array;
+    }
 }
